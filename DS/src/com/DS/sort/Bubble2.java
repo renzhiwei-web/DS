@@ -27,9 +27,9 @@ public class Bubble2 implements Sort{
 					flag = false;
 				}
 			}
-			System.out.println(Arrays.toString(demo));
+			//System.out.println(Arrays.toString(demo));
 		}
-		System.out.println("最终的排序结果" + Arrays.toString(demo));
+		//System.out.println("最终的排序结果" + Arrays.toString(demo));
 	}
 
 }

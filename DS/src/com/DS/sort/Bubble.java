@@ -17,9 +17,9 @@ public class Bubble implements Sort{
 					demo[j + 1] = temp;
 				}
 			}
-			System.out.println(Arrays.toString(demo));
+			//System.out.println(Arrays.toString(demo));
 		}
-		System.out.println("最终的排序结果" + Arrays.toString(demo));
+		//System.out.println("最终的排序结果" + Arrays.toString(demo));
 	}
 
 }

@@ -22,7 +22,7 @@ public class Select implements Sort {
 				demo[min] = temp;
 			}
 		}
-		System.out.println(Arrays.toString(demo));
+		//System.out.println(Arrays.toString(demo));
 	}
 
 }
