@@ -22,6 +22,11 @@ public class DemoTest {
 		 * Insert insert = new Insert();
 		 insert.sort(demo);
 		 */
+		/*
+		 * Ï£¶ûÅÅÐò
+		 * Shell shell = new Shell();
+		shell.sort(demo);
+		 */
 		
 	}
 }
