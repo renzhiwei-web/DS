@@ -41,9 +41,16 @@ public class DemoTest {
 		
 		/*
 		 * øÏ≈≈
-		 */
+		 
 		QuickSort quickSort = new QuickSort();
 		quickSort.sort(demo);
+		System.out.println(Arrays.toString(demo));*/
+		
+		/*
+		 * πÈ≤¢≈≈–Ú
+		 */
+		Merge merge = new Merge();
+		merge.sort(demo);
 		System.out.println(Arrays.toString(demo));
 	}
 }
