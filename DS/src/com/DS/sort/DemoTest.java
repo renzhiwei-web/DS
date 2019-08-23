@@ -30,13 +30,20 @@ public class DemoTest {
 		 * œ£∂˚≈≈–Ú
 		 * 
 		ShellEx shellEx = new ShellEx();
-		shellEx.sort(demo);*/
+		shellEx.sort(demo);
 		 
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm-ss");
 		ShellMv shellMv = new ShellMv();
 //		System.out.println(simpleDateFormat.format(new Date()));
 		shellMv.sort(demo);
 		System.out.println(Arrays.toString(demo));
-//		System.out.println(simpleDateFormat.format(new Date()));
+//		System.out.println(simpleDateFormat.format(new Date()));*/
+		
+		/*
+		 * øÏ≈≈
+		 */
+		QuickSort quickSort = new QuickSort();
+		quickSort.sort(demo);
+		System.out.println(Arrays.toString(demo));
 	}
 }
