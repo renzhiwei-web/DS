@@ -7,7 +7,7 @@ import java.util.Date;
 public class DemoTest {
 
 	public static void main(String[] args) {
-		int demo[] = {8,9,1,7,2,3,5,4,6,0};
+		int demo[] = {53,3,542,748,14,214};
 		
 		int[] arr = new int[80000];
 		for(int i = 0;i < 80000;i++)
@@ -48,9 +48,16 @@ public class DemoTest {
 		
 		/*
 		 * ¹é²¢ÅÅÐò
-		 */
+		 
 		Merge merge = new Merge();
 		merge.sort(demo);
+		System.out.println(Arrays.toString(demo));*/
+		
+		/*
+		 * »ùÊýÅÅÐò
+		 */
+		Radix radix = new Radix();
+		radix.sort(demo);
 		System.out.println(Arrays.toString(demo));
 	}
 }
