@@ -18,7 +18,7 @@ public class BinarySearch2 extends BinarySearch {
 	}
 
 	public static List<Integer> searchAll(int[] arr, int target, int left, int right) {
-		if (left > right) {
+		if (left > right || target < arr[0] || target > arr[arr.length - 1]) {
 			return new ArrayList<Integer>();
 		}
 		int mid = (left + right) / 2;
