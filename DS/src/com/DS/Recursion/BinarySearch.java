@@ -22,7 +22,7 @@ public class BinarySearch {
 	 * @return返回数组的下标
 	 */
 	public static int search(int[] arr, int target, int left, int right) {
-		if (left > right) {
+		if (left > right || target < arr[0] || target > arr[arr.length - 1]) {
 			return -1;
 		}
 		int mid = (left + right) / 2;
