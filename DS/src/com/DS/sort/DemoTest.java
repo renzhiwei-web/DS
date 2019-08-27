@@ -55,9 +55,16 @@ public class DemoTest {
 		
 		/*
 		 * »ùÊıÅÅĞò
-		 */
+		 
 		Radix radix = new Radix();
 		radix.sort(demo);
+		System.out.println(Arrays.toString(demo));*/
+		
+		/*
+		 * ¶ÑÅÅĞò
+		 */
+		Heap heap = new Heap();
+		heap.sort(demo);
 		System.out.println(Arrays.toString(demo));
 	}
 }
