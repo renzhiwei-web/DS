@@ -23,8 +23,81 @@ public class HuffmanCode {
 		System.out.println(Arrays.toString(zip));//17
 		byte[] huffmanZip = huffmanZip(bytes);
 		System.out.println(Arrays.toString(huffmanZip));
+		byte[] decode = decode(codes, zip);
+		System.out.println(new String(decode));
 		
 	}
+	/**
+	 * 完成数据的解压
+	 * 思路
+	 *1.将压缩后的字节数组转成二进制字符串
+	 *2.对照哈夫曼编码将二进制字符串转成原始的字符串
+	 *将一个byte转成一个二进制的字符串
+	 * @param b
+	 * @param flag 标识是否需要补高位，true表示需要补高位
+	 * @return 是该byte对应的二进制的字符串（注意是按补码返回的）
+	 */
+	private static String byteToBitString(Boolean flag,byte b){
+		int temp = b;
+		if (flag) {
+			temp |= 256;//按位与
+		}
+		
+		String str = Integer.toBinaryString(temp);//返回的是二进制的补码
+		if (flag) {
+			return str.substring(str.length() - 8);
+		}else {
+			return str;
+		}
+	}
+	/**
+	 * 
+	 * @param huffmanCodes 哈夫曼编码表map
+	 * @param huffmanBytes 哈夫曼编码得到的字节数组
+	 * @return 得到原来的字符串
+	 */
+	private static byte[] decode(Map<Byte, String> huffmanCodes,byte[] huffmanBytes){
+		StringBuilder stringBuilder = new StringBuilder();
+		for(int i = 0;i < huffmanBytes.length;i++){
+			byte b = huffmanBytes[i];
+			//判断是不是最后一个字节
+			boolean flag = (i == huffmanBytes.length - 1);
+			stringBuilder.append(byteToBitString(!flag, b));
+		}
+		
+		//把字符串安装指定的哈夫曼编码进行编码
+		//把哈夫曼编码进行调换，因为反向查询(反向编码表)
+		Map<String, Byte> map = new HashMap<String, Byte>();
+		for(Map.Entry<Byte, String> entry : huffmanCodes.entrySet()){
+			map.put(entry.getValue(), entry.getKey());
+		}
+		List<Byte> list = new ArrayList<Byte>();
+		for(int i = 0;i < stringBuilder.length();){
+			int count = 1;
+			boolean flag = true;
+			Byte b = null;
+			while(flag){
+				//递增的取出key
+				String key = stringBuilder.substring(i,i+count);
+				b = map.get(key);
+				if (b == null) {
+					count++;
+				}else {
+					flag = false;
+				}
+			}
+			list.add(b);
+			i += count;//i直接移动到count
+		}
+		//当for循环结束后，list中就存放了所有的字符
+		//把list中的数据放入到byte【】并返回
+		byte b[] = new byte[list.size()];
+		for(int i = 0;i < b.length;i++)
+			b[i] = list.get(i);
+		return b;
+	}
+	
+	
 	/**
 	 * 使用一个方法，将下面的压缩方法进行封装，便于我们的调用
 	 * @param bytes 原始的字符串数组对应的字节数组
