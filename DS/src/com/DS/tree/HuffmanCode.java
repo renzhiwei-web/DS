@@ -13,6 +13,7 @@ public class HuffmanCode {
 		byte[] bytes = str.getBytes();
 		System.out.println(bytes.length);//40
 		List<Node1> nodes = getNodes(bytes);//得到每个字符对应的哈夫曼编码权值（还不是哈夫曼编码）
+		System.out.println(Arrays.toString(bytes));
 		System.out.println(nodes);
 		Node1 createHuffmanTree = createHuffmanTree(nodes);//通过构建哈夫曼树
 		createHuffmanTree.perOrder();
@@ -20,8 +21,24 @@ public class HuffmanCode {
 		System.out.println(codes);
 		byte[] zip = zip(bytes, codes);//将str字符串用哈夫曼数组编码，再进行压缩等到的字节数组
 		System.out.println(Arrays.toString(zip));//17
+		byte[] huffmanZip = huffmanZip(bytes);
+		System.out.println(Arrays.toString(huffmanZip));
 		
 	}
+	/**
+	 * 使用一个方法，将下面的压缩方法进行封装，便于我们的调用
+	 * @param bytes 原始的字符串数组对应的字节数组
+	 * @return 经过哈夫曼编码处理后的字节数组（压缩后的数组）
+	 */
+	private static byte[] huffmanZip(byte[] bytes){
+		List<Node1> nodes = getNodes(bytes);//得到每个字符对应的哈夫曼编码权值（还不是哈夫曼编码）
+		Node1 createHuffmanTree = createHuffmanTree(nodes);//通过构建哈夫曼树
+		Map<Byte, String> codes = getCodes(createHuffmanTree);//得到每个字符对应的哈夫曼编码
+		byte[] zip = zip(bytes, codes);//将str字符串用哈夫曼数组编码，再进行压缩等到的字节数组
+		return zip;
+		
+	}
+	
 	//编写一个方法，将字符串对应的byte数组，通过生成哈弗曼编码表，返回一个哈夫曼编码压缩后的byte
 	/**
 	 * 
