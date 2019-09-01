@@ -1,5 +1,8 @@
 package com.DS.tree;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -25,8 +28,50 @@ public class HuffmanCode {
 		System.out.println(Arrays.toString(huffmanZip));
 		byte[] decode = decode(codes, zip);
 		System.out.println(new String(decode));
+		zipFile("C://Users//任志伟//Desktop//简历本_JLB00117.doc", "C://Users//任志伟//Desktop//dst.zip");
 		
 	}
+	//编写一个方法，将一个文件进行压缩
+	/**
+	 * 
+	 * @param srcFile 你传入的希望压缩文件的全部路径
+	 * @param dstFile 压缩后文件的存放路径
+	 */
+	private static void zipFile(String srcFile,String dstFile){
+		FileInputStream is = null;
+		FileOutputStream os = null;
+		ObjectOutputStream oos = null;
+		try {
+			is = new FileInputStream(srcFile);
+			byte[] b = new byte[is.available()];
+			is.read(b);
+			//获取到文件对应的哈夫曼编码表
+			byte[] huffmanBytes = huffmanZip(b);
+			//创建文件的输出流，存放压缩文件
+			os = new FileOutputStream(dstFile);
+			//创建一个和文件输出流关联的objectoutpuStrea
+			oos = new ObjectOutputStream(os);
+			//以对象流的方式写入哈夫曼编码，是为了以后我们恢复源文件使用
+			//把哈夫曼编码后的字节数组写入压缩文件
+			oos.writeObject(huffmanBytes);
+			oos.writeObject(huffmanCodes);
+			
+ 		} catch (Exception e) {
+			// TODO: handle exception
+ 			System.out.println(e.getMessage());
+		}finally {
+			try {
+				is.close();
+				oos.close();
+				os.close();
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println(e.getMessage());
+			}
+		}
+	}
+	
+	
 	/**
 	 * 完成数据的解压
 	 * 思路
