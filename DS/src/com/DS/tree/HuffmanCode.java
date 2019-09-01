@@ -2,14 +2,23 @@ package com.DS.tree;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * 1.如果文件本身就是经过压缩处理的，那么使用的哈夫曼编码再压缩效率不会有明显的变化，比如视频，ppt等文件
+ * 2.哈夫曼编码是按照字节流来处处理的，因此可以处理所有文件
+ * 3.如果一个文件中的内容，重复的数据不多，压缩效果也不会明显
+ * @author 任志伟
+ *
+ */
 public class HuffmanCode {
 	public static void main(String[] args) {
 		String str = "i like like like java do you like a java";
@@ -28,10 +37,43 @@ public class HuffmanCode {
 		System.out.println(Arrays.toString(huffmanZip));
 		byte[] decode = decode(codes, zip);
 		System.out.println(new String(decode));
-		zipFile("C://Users//任志伟//Desktop//简历本_JLB00117.doc", "C://Users//任志伟//Desktop//dst.zip");
+		zipFile("C://Users//任志伟//Desktop//1.jpg", "C://Users//任志伟//Desktop//dst.zip");
+		unZipFile("C://Users//任志伟//Desktop//dst.zip", "C://Users//任志伟//Desktop//2.jpg");
 		
 	}
-	//编写一个方法，将一个文件进行压缩
+	/**
+	 * 加压文件的的方法
+	 * @param zipFile
+	 * @param dstFile
+	 */
+	private static void unZipFile(String zipFile,String dstFile){
+		InputStream is = null;
+		ObjectInputStream ois = null;
+		OutputStream os = null;
+		try {
+			is = new FileInputStream(zipFile);
+			ois = new ObjectInputStream(is);
+			byte[] huffmanBytes = (byte[]) ois.readObject();
+			Map<Byte, String> huffmanCodes = (Map<Byte, String>) ois.readObject();
+			byte[] bytes = decode(huffmanCodes, huffmanBytes);
+			os = new FileOutputStream(dstFile);
+			os.write(bytes);
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e.getMessage());
+		}finally {
+			try {
+				os.close();
+				ois.close();
+				is.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+				System.out.println(e2.getMessage());
+			}
+		}
+	}
+	
+	//编写一个方法，将一个文件进行压缩，这种压缩方法是不能被压缩软件来解压的，算法不一样
 	/**
 	 * 
 	 * @param srcFile 你传入的希望压缩文件的全部路径
