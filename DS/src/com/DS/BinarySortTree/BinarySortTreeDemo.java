@@ -18,6 +18,41 @@ public class BinarySortTreeDemo {
 class BinarySortTree{
 	private Node root;
 	
+	public Node search(int value){
+		if (root == null) {
+			return null;
+		}else {
+			return root.search(value);
+		}
+	}
+	
+	public Node searchParent(int value){
+		if (root == null) {
+			return null;
+		}else {
+			return root.searchParent(value);
+		}
+	}
+	
+	public void delNode(int value){
+		if (root == null) {
+			return;
+		}else {
+			Node targetNode = search(value);
+			if (targetNode == null) {
+				return;
+			}
+			
+			if (root.leftNode == null && root.rightNode ==null) {
+				
+			}
+			//如果要删除的节点没有父节点就不用查找父节点了
+			if (targetNode == root) {
+				
+			}
+		}
+	}
+	
 	public void add(Node node){
 		if(root == null){
 			root = node;
@@ -85,6 +120,46 @@ class Node{
 		System.out.println(this);
 		if (this.rightNode !=null) {
 			this.rightNode.infixOrder();
+		}
+	}
+	/**
+	 * 查找要删除的节点
+	 * @param value 希望删除节点的值
+	 * @return 如果找到返回值就返回该节点
+	 */
+	public Node search(int value){
+		if (value == this.value) {
+			return this;
+		}else if(value < this.value){//如果查找的值小于当前节点，向左子树递归查找
+			if (this.leftNode == null)
+				return null;
+			return this.leftNode.search(value);
+		}else {
+			if (this.rightNode == null) {
+				return null;
+			}
+			return this.rightNode.search(value);
+		}
+	}
+	/**
+	 * 查找要删除节点的父节点
+	 * @param value希望删除节点的值
+	 * @return 如果找到就返回该节点的父节点
+	 */
+	public Node searchParent(int value){
+		//如果当前节点就是要删除节点的父节点，就返回
+		if ((this.leftNode != null && this.leftNode.value == value) || 
+				(this.rightNode != null && this.rightNode.value == value)) {
+			return this;
+		}else {
+			//如果查找的值小于当前节点的值，并且当且节点的左子节点不为空
+			if (value < this.value && this.leftNode != null) {
+				return this.leftNode.searchParent(value);
+			}else if (value >= this.value && this.rightNode != null) {
+				return this.rightNode.searchParent(value);
+			}else {
+				return null;
+			}
 		}
 	}
 }
