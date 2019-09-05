@@ -12,6 +12,9 @@ public class BinarySortTreeDemo {
 			tree.add(new Node(arr[i]));
 		System.out.println("中序遍历二叉排序树");
 		tree.infixOrder();
+		System.out.println();
+		tree.delNode(10);
+		tree.infixOrder();
 		
 	}
 }
@@ -39,18 +42,58 @@ class BinarySortTree{
 			return;
 		}else {
 			Node targetNode = search(value);
+			//如果没有找到要删除的节点
 			if (targetNode == null) {
 				return;
 			}
 			
-			if (root.leftNode == null && root.rightNode ==null) {
-				
+			if (root.leftNode == null && root.rightNode ==null) {//如果当前二叉排序树只有一个节点
+				root = null;
+				return;
 			}
-			//如果要删除的节点没有父节点就不用查找父节点了
-			if (targetNode == root) {
-				
+			Node parent = searchParent(value);
+			//如果要删除的节点是叶子节点
+			if (targetNode.leftNode == null && targetNode.rightNode == null) {
+				if (parent.leftNode != null && parent.leftNode.value == value) {//如果要查找的节点是父节点的左子节点
+					parent.leftNode = null;
+				}else if(parent.rightNode != null && parent.rightNode.value == value){
+					parent.rightNode = null;
+				}
+			}else if (targetNode.leftNode != null && targetNode.rightNode != null) {
+				int minVal = delRightTreeMin(targetNode.rightNode);
+				targetNode.value = minVal;
+			}else {//删除只有一个子树的节点
+				if (targetNode.leftNode != null) {//如果要删除的节点只有有左子节点
+					if (parent.leftNode.value == value) {//如果要删除的节点是其父节点的左子节点
+						parent.leftNode = targetNode.leftNode;
+					}else {
+						parent.rightNode = targetNode.leftNode;
+					}
+				}else {//要删除的节点只有右子节点
+					if (parent.leftNode.value == value) {//如果要删除的节点是其父节点的左子节点
+						parent.leftNode = targetNode.rightNode;
+					}else {
+						parent.rightNode = targetNode.rightNode;
+					}
+				}
 			}
 		}
+	}
+	
+	/**
+	 * 返回的以node为根节点的二叉排序树的最小节点的值
+	 * 删除node为根节点的二叉排序树的最小节点的值
+	 * @param node传入的节点（当作二叉排序树的根节点）
+	 * @return 返回的以node为根节点的二叉排序树的最小节点的值
+	 */
+	public int delRightTreeMin(Node node){
+		Node target = node;
+		//循环的查找左节点，就会找到最小值,根据二叉排序树的特性来查找最小值
+		while(target.leftNode != null){
+			target = target.leftNode;
+		}
+		delNode(target.value);
+		return target.value;
 	}
 	
 	public void add(Node node){
