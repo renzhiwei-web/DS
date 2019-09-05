@@ -14,6 +14,12 @@ public class BinarySortTreeDemo {
 		tree.infixOrder();
 		System.out.println();
 		tree.delNode(10);
+		tree.delNode(7);
+		tree.delNode(3);
+		tree.delNode(1);
+		tree.delNode(2);
+		tree.delNode(12);
+		tree.delNode(5);
 		tree.infixOrder();
 		
 	}
@@ -64,16 +70,24 @@ class BinarySortTree{
 				targetNode.value = minVal;
 			}else {//删除只有一个子树的节点
 				if (targetNode.leftNode != null) {//如果要删除的节点只有有左子节点
-					if (parent.leftNode.value == value) {//如果要删除的节点是其父节点的左子节点
-						parent.leftNode = targetNode.leftNode;
+					if (parent != null) {//如果要删除的节点没有父节点，则直接将root该节点的左节点
+						if (parent.leftNode.value == value) {//如果要删除的节点是其父节点的左子节点
+							parent.leftNode = targetNode.leftNode;
+						}else {
+							parent.rightNode = targetNode.leftNode;
+						}
 					}else {
-						parent.rightNode = targetNode.leftNode;
+						root = targetNode.leftNode;
 					}
 				}else {//要删除的节点只有右子节点
-					if (parent.leftNode.value == value) {//如果要删除的节点是其父节点的左子节点
-						parent.leftNode = targetNode.rightNode;
+					if (parent != null) {
+						if (parent.leftNode.value == value) {//如果要删除的节点是其父节点的左子节点
+							parent.leftNode = targetNode.rightNode;
+						}else {
+							parent.rightNode = targetNode.rightNode;
+						}
 					}else {
-						parent.rightNode = targetNode.rightNode;
+						root = targetNode.rightNode;
 					}
 				}
 			}
